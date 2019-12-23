@@ -1,4 +1,6 @@
 package com.dong.web.person;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import com.dong.web.util.Printer;
 public class PersonController {
 	@Autowired 	private PersonRepository personRepository;
 	@Autowired	private Printer p;
+	@Autowired	private Person person;
 	
 	@RequestMapping("/")
 	public String index() {
@@ -24,11 +27,41 @@ public class PersonController {
 	}
 
 	@PostMapping("/login")
-	public Person login(@RequestBody Person person) {
+	public HashMap<String, Object> login(@RequestBody Person person) {
+		HashMap<String, Object> map = new HashMap<>();
 		p.accept("로그인 진입");
-		person.setUserid("wnn");
 		p.accept(String.format("id: %s", person.getUserid()));
 		p.accept(String.format("pwd: %s", person.getPasswd()));
-		return person;
+		person = personRepository.findByUseridAndPasswd
+					(person.getUserid(), person.getPasswd());
+		if(person!= null) {
+			p.accept("로그인 성공");
+			map.put("result","SUCCESS");
+			map.put("person",person);
+		}else {
+			p.accept("로그인 실패");
+			map.put("result","FAIL");
+			map.put("person",person);
+		}
+		return map;
+	}
+	
+	@PostMapping("/join")
+	public HashMap<String, Object> join(@RequestBody Person person) {
+		HashMap<String, Object> map = new HashMap<>();
+		
+		p.accept(String.format("bday: %s", person.getBirthday()));
+		person = personRepository.save(person);
+		
+		if(person!= null) {
+			p.accept("조인 성공");
+			map.put("result","SUCCESS");
+			map.put("person",person);
+		}else {
+			p.accept("조인 실패");
+			map.put("result","FAIL");
+			map.put("person",person);
+		}
+		return map;
 	}
 }

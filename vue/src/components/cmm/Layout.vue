@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-	<header>
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
 		<slot name="header" :title="header"></slot>
 	</header>
 	<aside id="sidebar">
@@ -37,17 +37,19 @@ export default {
      margin: 20px auto;
 }
 header {
-     height: 100px;
+     height: 70px;
      padding: 0 15px;
      text-align: right;
 }
 #content {
+     margin:50px 0px 0px 0px;
      width: 696px;
      float: left;
      padding: 5px 15px;
     min-height: 300px;
 }
 #sidebar {
+     margin:50px 0px 0px 0px;
      width: 200px;
      padding: 5px 15px;
      float: left;

@@ -1,66 +1,82 @@
 <template>
-<div class="container">
-<div class="card bg-light">
 <article class="card-body mx-auto" style="max-width: 400px;">
 	<form>
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		<span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		</div>
-        <input name="" class="form-control" placeholder="Full name" type="text">
+
+        <input v-model="userid" class="form-control" placeholder="userid" type="text">
+
     </div> <!-- form-group// -->
     <div class="form-group input-group">
     <div class="input-group-prepend">
 		<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 		</div>
-        <input name="" class="form-control" placeholder="Email address" type="email">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-  <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-		</div>
-		<select class="custom-select" style="max-width: 120px;">
-		<option selected="">+971</option>
-		<option value="1">+972</option>
-		<option value="2">+198</option>
-		<option value="3">+701</option>
-		</select>
-    <input name="" class="form-control" placeholder="Phone number" type="text">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-building"></i> </span>
-		</div>
-		<select class="form-control">
-			<option selected=""> Select job type</option>
-			<option>Designer</option>
-			<option>Manager</option>
-			<option>Accaunting</option>
-		</select>
-	</div> <!-- form-group end.// -->
-    <div class="form-group input-group">
-    <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
-        <input class="form-control" placeholder="Create password" type="password">
+
+        <input v-model="passwd" class="form-control" placeholder="password" type="text">
+
     </div> <!-- form-group// -->
     <div class="form-group input-group">
     <div class="input-group-prepend">
 		<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		</div>
-        <input class="form-control" placeholder="Repeat password" type="password">
-    </div> <!-- form-group// -->                                      
+        <input v-model="name" class="form-control" placeholder="name" type="text">
+    </div> <!-- form-group// -->
+    <div class="form-group input-group">
+
+    <div class="input-group-prepend">
+		<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input v-model="birthday" class="form-control" placeholder="birthday" type="text">
+    </div> <!-- form-group// -->   
+
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+        <button type="submit" class="btn btn-primary btn-block" @click.prevent="join"> Create Account  </button>
     </div> <!-- form-group// -->      
+
     <p class="text-center"><router-link to="/login">Have an account? Log In </router-link></p>                                                                 
 </form>
 </article>
-</div> <!-- card.// -->
-</div> 
 </template>
 <script>
+import axios from 'axios'
 export default {
+    data () {
+		return {
+			context:'http://localhost:8080',
+			result:'',
+			userid:'',
+            passwd:'',
+            name:'',
+            birthday:'',
+            person:{}
+		}
+    },
+    methods:{
+        join(){
+            let url = `${this.context}/join`
+            let data = {
+				userid: this.userid,
+                passwd: this.passwd,
+                name: this.name,
+                birthday: this.birthday
+            }
+            let headers = {
+                'authorization': 'JWT fefege..',
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+            axios
+            .post(url, data, headers)
+            .then(res=>{
+                   alert (res.data.result)
+            })
+            .catch(()=>{
+                alert('악시오스 실패')
+            })
+        }
+    }
 }
 </script>
 

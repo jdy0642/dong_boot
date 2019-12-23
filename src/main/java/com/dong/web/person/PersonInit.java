@@ -25,6 +25,7 @@ public class PersonInit implements ApplicationRunner {
 			String[][] mtx = {
 					{"hong", "1", "홍길동", "1980-01-01"},
 					{"park", "1", "박지성", "1981-03-03"},
+					{"yeon", "1", "김연아", "1991-03-03"},
 					{"kim", "1", "김유신", "1980-05-05"}
 			};
 			for(String[] arr : mtx) {
