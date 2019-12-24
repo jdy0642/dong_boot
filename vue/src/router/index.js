@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/cmm/Layout.vue'
+import PostAuth from '@/components/cmm/PostAuth.vue'
+import PreAuth from '@/components/cmm/PreAuth.vue'
 import Join2 from '@/components/member/Join2.vue'
 import Join from '@/components/member/Join.vue'
 import Login2 from '@/components/member/Login2.vue'
 import Login from '@/components/member/Login.vue'
 import Admin from '@/components/member/Admin.vue'
 import MyPage from '@/components/member/MyPage.vue'
+import MyPageUpdate from '@/components/member/MyPageUpdate.vue'
 import List from '@/components/board/List.vue'
 import Remove from '@/components/board/Remove.vue'
 import Search from '@/components/board/Search.vue'
@@ -22,7 +25,10 @@ export default new Router({
 		{path:'/join', name:'join', component: Join},
 		{path:'/admin', name:'admin', component: Admin},
 		{path:'/mypage', name:'mypage', component: MyPage},
+		{path:'/mypageupdate', name:'mypageupdate', component: MyPageUpdate},
 		{path:'/join2', name:'join2', component: Join2},
+		{path:'/postauth', name:'postauth', component: PostAuth},
+		{path:'/preauth', name:'preauth', component: PreAuth},
 		{path:'/login', name:'login', component: Login},
 		{path:'/login2', name:'login2', component: Login2},
 		{path:'/list', name:'list', component: List},

@@ -1,7 +1,7 @@
 <template>
 	<div class="login-form">
     <form>
-        <h2 class="text-center">Log in</h2>       
+        <h2 class="text-center">Login</h2>       
         <div class="form-group">
             <input v-model="userid" type="text" class="form-control" placeholder="Username" required="required">
         </div>
@@ -48,13 +48,9 @@ export default {
 			.post(url, data, headers)
 			.then(res=>{
                 if(res.data.result === "SUCCESS"){
-                    this.person = res.data.person
-                    store.state.userid = this.person.userid
-                    store.state.userpw = this.person.passwd
-                    store.state.name = this.person.name
-                    store.state.birthday = this.person.birthday
-                    store.state.id = this.person.id
-                    alert(`스토어에 저장성공 ${store.state.name}`)
+                    store.state.person = res.data.person
+                    store.state.authCheck = true
+                    alert(`스토어에 저장성공 ${store.state.authCheck}`)
                     this.$router.push({path:'/mypage'})
                 }else{
                     alert(`로그인 실패 `)

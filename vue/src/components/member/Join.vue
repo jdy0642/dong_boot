@@ -1,36 +1,21 @@
 <template>
+<div>
+<h3>Join</h3>
+<br/>
 <article class="card-body mx-auto" style="max-width: 400px;">
 	<form>
 	<div class="form-group input-group">
-		<div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-user"></i> </span>
-		</div>
-
         <input v-model="userid" class="form-control" placeholder="userid" type="text">
-
     </div> <!-- form-group// -->
     <div class="form-group input-group">
-    <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-		</div>
-
         <input v-model="passwd" class="form-control" placeholder="password" type="text">
-
     </div> <!-- form-group// -->
     <div class="form-group input-group">
-    <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
         <input v-model="name" class="form-control" placeholder="name" type="text">
     </div> <!-- form-group// -->
     <div class="form-group input-group">
-
-    <div class="input-group-prepend">
-		<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
         <input v-model="birthday" class="form-control" placeholder="birthday" type="text">
     </div> <!-- form-group// -->   
-
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block" @click.prevent="join"> Create Account  </button>
     </div> <!-- form-group// -->      
@@ -38,6 +23,7 @@
     <p class="text-center"><router-link to="/login">Have an account? Log In </router-link></p>                                                                 
 </form>
 </article>
+</div>
 </template>
 <script>
 import axios from 'axios'

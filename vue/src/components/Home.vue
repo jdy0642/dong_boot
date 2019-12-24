@@ -1,7 +1,6 @@
 <template>
 <div id="app">
 <layout>
-
 	<template #header="h">
   <div class="container">
     <div class="navbar-header">
@@ -11,13 +10,21 @@
       <router-link to="/" class="navbar-brand"> Ship </router-link>
     </div>
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+      <ul class="nav navbar-nav navbar-right" >
+        <li v-if="tf">
           <router-link to="/join">join</router-link>
         </li>
-        <li>
+        <li v-else>
+          <router-link to="/withdrawal">회원탈퇴</router-link>
+        </li>
+
+        <li v-if="tf">
           <router-link to="/login">login</router-link>
         </li>
+         <li v-else>
+          <router-link to="/logout">logout</router-link>
+        </li>
+
         <li>
           <router-link to="/admin">admin</router-link>
         </li>
@@ -25,7 +32,7 @@
           <router-link to="/mypage">my page</router-link>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#">Footsal</a></li>
             <li><a href="#">Lol</a></li>
@@ -36,6 +43,7 @@
         </li>
       </ul>
     </nav>
+      
   </div>
   <div></div> <div></div>
 	</template>
@@ -52,7 +60,7 @@
 	</template>
 
 	<template #footer ="f">
-		<h1>{{f.title}} </h1>
+
 	</template>
 
 </layout>
@@ -61,6 +69,7 @@
 
 <script>
 import Layout from '@/components/cmm/Layout.vue'
+import {store} from '@/store'
 export default {
   components:{
     Layout
@@ -75,24 +84,20 @@ export default {
 			{menu: "글 검색 ", link:"/search"},
 			{menu: "글 수정 ", link:"/update"}
       ],
-      
 		}
-  }
+  },
+  computed:{
+    tf(){
+      return store.state.person.name == undefined
+    }
+	}
 }
 </script>
 <style scoped>
-ul.menu {
-    position:relative;
-    padding: 5px 5px 5px 5px;
-    list-style: none;
-}
 li {
    position:relative;
     padding: 5px 5px 5px 5px;
     list-style: none;
-}
-ul.menu a {
-    text-decoration:none;
 }
 
 @import 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans';
@@ -105,7 +110,7 @@ header {
 }
 
 .navbar .nav {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   letter-spacing: 3px;
   font-size: 1.2rem

@@ -1,62 +1,75 @@
 <template>
+
   <div class="back">
-     <div align = "center" ><h1> {{name}} 님의 My Page</h1></div>
+     <div align = "center" ><h2> {{person.name}} 님의 My Page</h2>
+     <h3> <a href="#" @click="logout">로그아웃  </a><a href="#" @click.prevent="withdrawal">회원탈퇴</a></h3>
+     </div>
       <div class="sub">
-        <div class="pull-left rt size" >
-           <fieldset style=" margin-top: 1%; height: 31.5%;border: 2px solid black;">
-             <legend><h3>비밀번호 변경</h3></legend>
-                <input type="text" name="pwd" size="20" placeholder="기존 비밀번호 입력" style="float: none; width: 70%;">
-                <button style="height: 38%; width: 20%; float: right;">수정</button><br/><br/>
-           <span><input type="text" name="newpwd" size="20" placeholder="변경할 비밀번호 입력" style="float: none;width: 70%;"></span>
-           </fieldset>
-           <fieldset style="margin-top: 1%; height: 31.5%;border: 2px solid black;">
-              <legend><h3>연락처 변경</h3></legend>
-                <input type="text" name="pwd" size="20" placeholder="변경할 연락처 입력" style="float: none;width: 70%;">
-                <button style="width: 20%; float: right;">수정</button><br/><br/>
-           </fieldset>
-           <fieldset style="margin-top: 1%; height: 31.5%;border: 2px solid black;">
-               <legend><h3>업체주소 변경</h3></legend>
-                <input type="text" name="pwd" size="20" placeholder="변경할 주소 입력" style="float: none;width: 70%;">
-                <button style="width: 20%; float: right;">수정</button><br/><br/>
-           </fieldset>
-        </div>
-        <div class="pull-right size" >
-            <fieldset style="height: 49%;border: 2px solid black;">
+        <div  >
                 <legend><h3>정보보기</h3></legend>
-                <h3>생일: {{birthday}}</h3>
-                <h3>유저 아이디: {{userid}}</h3>
-                <a href="#" ><h3 align = "center">업체 등록 하기</h3></a>
-            </fieldset>
-            <fieldset style="margin-top: 1%; height: 47.5%; border: 2px solid black;">
-              <legend><h3>등록업체 삭제</h3></legend>
-              <select name="pat" id="pattype" style="height: 21.5px; vertical-align:middle;">
-               <option value="LargeDog">업체1</option>
-               <option value="LargeDog">업체2</option>
-               <option value="SmallDog">업체3</option>
-               <input type="text" placeholder="직접입력" style="float: none; width: 70%;">
-              </select>
-                <button style="width: 20%; float: right;">등록</button><br/><br/>
-              <a href="#"><h2 align="center">회원탈퇴</h2></a>
-            </fieldset>
+                <h4>아이디: {{person.id}}</h4>
+                <h4>유저 아이디: {{person.userid}}</h4>
+                <h4>비밀번호: {{person.passwd}}</h4>
+                <h4>이름: {{person.name}}</h4>
+                <h4>생일: {{person.birthday}}</h4>
+                <h4>성: {{person.gender}}</h4>
+                <h4>학년: {{person.hak}}</h4>
+                <h4>반: {{person.ban}}</h4>
+                <h4>점수: {{person.score}}</h4>
         </div>
+             <br/><br/><button @click.prevent="update">수정</button><br/><br/>
       </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import {store} from '../../store'
 export default {
   data(){
     return{
-      name: store.state.name,
-      birthday: store.state.birthday,
-      userid: store.state.userid
+      context:'http://localhost:8080',
+      // id: store.state.person.id,
+      // userid: store.state.person.userid,
+      // passwd: store.state.person.passwd,
+      // name: store.state.person.name,
+      // birthday: store.state.person.birthday,
+      // gender: store.state.person.gender,
+      // hak:store.state.person.hak,
+      // ban:store.state.person.ban,
+      // score: store.state.person.score
+      person: store.state.person
+    }
+  },
+  methods:{
+    logout(){
+      alert('로그아웃')
+      alert(store.state.person.name)
+      store.state.person={}
+      alert(store.state.person.name)
+      this.$router.push({path: '/login'})
+
+    },
+    withdrawal(){
+      alert('회원탈퇴')
+      axios
+      .delete(`${this.context}/withdrawal/${store.state.person.userid}`)
+      .then(
+        alert('회탈 성공2')
+      )
+      .catch(()=>{
+        alert('악시오스 회탈 실패')
+      })
+      this.$router.push({path:'/'})
+    },
+    update(){
+      alert('비번 변경')
+      this.$router.push({path:'/mypageupdate'})
     }
   }
 }
 </script>
-
- <style scoped>
+<style scoped>
     .back {width: 700px; margin: 0 auto;}
     .sub {width: 90%; height: 600px; margin: 0 auto; text-align: center;}
     .pull-left {float: left;}
