@@ -2,95 +2,112 @@
 <div id="app">
 <layout>
 	<template #header="h">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-      </button>
-      <router-link to="/" class="navbar-brand"> Ship </router-link>
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        </button>
+        <span class="glyphicon glyphicon-tint" aria-hidden="true"> 
+        <router-link to="/" class="navbar-brand"> Ship </router-link>
+        </span>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav navbar-right" >
+          <li v-if="logined">
+            <router-link to="/join">join</router-link>
+          </li>
+          <li v-else>
+            <a href="#" @click.prevent="withdrawal">회원탈퇴</a>
+          </li>
+          <li v-if="logined">
+            <router-link to="/login">login</router-link>
+          </li>
+          <li v-else>
+            <a href="#" @click="logout">로그아웃  </a>
+          </li>
+          <li>
+            <router-link to="/list">admin</router-link>
+          </li>
+          <li>
+            <router-link to="/futsalmypage">my page</router-link>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><router-link to="/futsal">futsal</router-link></li>
+              <li><router-link to="/lol">lol</router-link></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-      <ul class="nav navbar-nav navbar-right" >
-        <li v-if="tf">
-          <router-link to="/join">join</router-link>
-        </li>
-        <li v-else>
-          <router-link to="/withdrawal">회원탈퇴</router-link>
-        </li>
-
-        <li v-if="tf">
-          <router-link to="/login">login</router-link>
-        </li>
-         <li v-else>
-          <router-link to="/logout">logout</router-link>
-        </li>
-
-        <li>
-          <router-link to="/admin">admin</router-link>
-        </li>
-        <li>
-          <router-link to="/mypage">my page</router-link>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Footsal</a></li>
-            <li><a href="#">Lol</a></li>
-          </ul>
-        </li>
-        <li class="active">
-          <a href="#">Contact</a>
-        </li>
-      </ul>
-    </nav>
-      
-  </div>
-  <div></div> <div></div>
 	</template>
+
 	<template #sidebar="s">
-		<ul class="menu">
-			<li v-for="s of sides" :key="s.menu">
-			<router-link :to="s.link"> {{s.menu}} </router-link>
-			</li>
-		</ul>
-	</template>
+      <div v-switch="sidebarCheck">
+        <h4 v-case="'presidebar'">
+          <component :is="'pre-sidebar'"></component></h4>
+        <h4 v-case="'adminsidebar'">
+          <component :is="'admin-sidebar'"></component> </h4>
+        <h4 v-case="'studentsidebar'">
+          <component :is="'student-sidebar'"></component> </h4>
+      </div>
+  </template>
 
 	<template #content ="c" class="c">
      <router-view></router-view>
 	</template>
 
 	<template #footer ="f">
-
-	</template>
+	<h3>footer</h3>
+  </template>
 
 </layout>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Layout from '@/components/cmm/Layout.vue'
+import StudentSidebar from '@/components/cmm/StudentSidebar.vue'
+import PreSidebar from '@/components/cmm/PreSidebar.vue'
+import AdminSidebar from '@/components/cmm/AdminSidebar.vue'
 import {store} from '@/store'
+
 export default {
   components:{
-    Layout
+    Layout, StudentSidebar, PreSidebar, AdminSidebar
   },
   data(){
-	return{
-		sides:[
-			{menu: "홈 ", link:"/"},
-			{menu: "글쓰기 ", link:"/write"},
-			{menu: "목록 ", link:"/list"},
-			{menu: "글 삭제 ", link:"/remove"},
-			{menu: "글 검색 ", link:"/search"},
-			{menu: "글 수정 ", link:"/update"}
-      ],
+    return{
+      context:'http://localhost:8080'
 		}
   },
   computed:{
-    tf(){
+    logined(){
       return store.state.person.name == undefined
+    },
+    sidebarCheck() {
+      return store.state.sidebar
     }
-	}
+  },
+  methods:{
+    logout(){
+      store.state.person={},
+      store.state.sidebar='presidebar'
+      this.$router.push({path: '/login'})
+    },
+     withdrawal(){
+      axios
+      .delete(`${this.context}/withdrawal/${store.state.person.userid}`)
+      .then(
+        alert('회탈 성공2')
+      )
+      .catch(()=>{
+        alert('악시오스 회탈 실패')
+      })
+      this.$router.push({path:'/'})
+    }
+  }
 }
 </script>
 <style scoped>
@@ -101,80 +118,53 @@ li {
 }
 
 @import 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans';
+.glyphicon{
+  color: white;
+  width: 50px;
+  top: 10px;
+}
+.dropdown-menu>li>a {
+  color: #FFFFFF
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+  color: #FFCC00
+}
+.dropdown-menu {
+  background-color: black
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+  background-color: black
+}
 header {
   height: 50px;
+}
+.collapse{
+  bottom:500px;
 }
 .navbar-brand {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
 }
-
 .navbar .nav {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   letter-spacing: 3px;
-  font-size: 1.2rem
 }
-
-.navbar-inverse {
-  background-color: black;  
-}
-
-.navbar-inverse .navbar-nav>.active>a:hover,
-.navbar-inverse .navbar-nav>li>a:hover,
-.navbar-inverse .navbar-nav>li>a:focus {
-  background-color: black;
-}
-
-.navbar-inverse .navbar-nav>.active>a,
-.navbar-inverse .navbar-nav>.open>a,
-.navbar-inverse .navbar-nav>.open>a,
-.navbar-inverse .navbar-nav>.open>a:hover,
-.navbar-inverse .navbar-nav>.open>a,
-.navbar-inverse .navbar-nav>.open>a:hover,
-.navbar-inverse .navbar-nav>.open>a:focus {
-  background-color: #003300
-}
-
-.dropdown-menu {
-  background-color: #006B00
-}
-
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-  background-color: #002200
-}
-
-.navbar-inverse {
-  background-image: none;
-}
-
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-  background-image: none;
-}
-
-.navbar-inverse {
-  border-color: #003300
-}
-
 .navbar-inverse .navbar-brand {
   color: #FFFFFF
 }
-
 .navbar-inverse .navbar-brand:hover {
   color: #FFCC00
 }
-
 .navbar-inverse .navbar-nav>li>a {
   color: #FFFFFF
 }
-
 .navbar-inverse .navbar-nav>li>a:hover,
 .navbar-inverse .navbar-nav>li>a:focus {
   color: #FFCC00
 }
-
 .navbar-inverse .navbar-nav>.active>a,
 .navbar-inverse .navbar-nav>.open>a,
 .navbar-inverse .navbar-nav>.open>a:hover,
@@ -182,33 +172,4 @@ header {
   color: #FFCC00
 }
 
-.navbar-inverse .navbar-nav>.active>a:hover,
-.navbar-inverse .navbar-nav>.active>a:focus {
-  color: #FFCC00
-}
-
-.dropdown-menu>li>a {
-  color: #FFFFFF
-}
-
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-  color: #FFCC00
-}
-
-.navbar-inverse .navbar-nav>.dropdown>a .caret {
-  border-top-color: #FFFFFF
-}
-
-.navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
-  border-top-color: #FFFFFF
-}
-
-.navbar-inverse .navbar-nav>.dropdown>a .caret {
-  border-bottom-color: #FFFFFF
-}
-
-.navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
-  border-bottom-color: #FFFFFF
-}
 </style>

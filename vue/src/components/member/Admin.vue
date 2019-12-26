@@ -1,134 +1,100 @@
 <template>
-  <div id="section-top-border">
-  <br />
-				<div class="progress-table-wrap" :style="{backgroundImage:'url(https://res.cloudinary.com/valuechampion/image/upload/c_lfill,dpr_1.0,f_auto,h_1600,q_auto,w_1600/v1/lol_skin)'}">
-					<div class="progress-table">
-						<div class="table-head">
-						</div>
-						<div class="table-row">
-							<div class="serial">01</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="silver" v-bind:src="silver"/>실버4</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">02</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="gold" v-bind:src="gold"/>골드3</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">03</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="master" v-bind:src="master"/>마스터</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">04</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="silver" v-bind:src="silver"/>실버1</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">05</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="gold" v-bind:src="gold"/>골드2</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">06</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="pla" v-bind:src="pla"/>플레2</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">07</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="dia" v-bind:src="dia"/>다이아3</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">08</div>
-							<div class="room">사람구함</div>
-							<div class="tier"><img id="gold" v-bind:src="gold"/>골드2</div>
-						</div>
-						<button class="page" v-for="j of buttons" :key="j.name">{{j.name}}</button>
-						<div id="btns">
-						<button id="btn1">팀원구하기</button>
-						<button id="btn2">참여하기</button>
-						</div>
-					</div>
-				</div>
-			</div>
+
+  <div class="back">
+     <div align = "center" ><h2> {{name}} 님의 어드민</h2>
+     <h3> <a href="#" @click="logout">로그아웃  </a><a href="#" @click.prevent="withdrawal">회원탈퇴</a></h3>
+     </div>
+      <div class="sub">
+         <div class="pull-mid size" >        
+        <legend><h3>학생부 관리 </h3></legend>
+        <input v-model="hak" type="text"  placeholder="변경할 학년 입력" >
+        <input v-model="ban" type="text"  placeholder="변경할 반 입력" >
+        <input v-model="score" type="text"  placeholder="변경할 점수 입력" >
+        <br/><br/><button @click.prevent="update">수정</button><br/><br/>
+		</div>
+      </div>
+    </div>
 </template>
+
 <script>
+import axios from 'axios'
+import {store} from '../../store'
 export default {
-	data(){
-		return {
-			buttons : [
-				{name:1},
-				{name:2},
-				{name:3},
-				{name:4},
-				{name:5}
-			],
-			silver: 'http://www.흑우팀.com/data/file/class/thumb-3552849856_leRrPahM_fa9a6e6047e0e889e7a1847ff68ff413f8d776ed_400x229.png',
-			gold : 'http://mblogthumb1.phinf.naver.net/MjAxOTAyMTJfMjQ4/MDAxNTQ5OTYwNTcyNTc0.GagwKwXIJG8CjWRt94kaNNRJRjTY3mhrxcg82vYDlZYg.y1Vye3r5fLurs3joZDJRV_4khLqlOXahs3tciCmIN44g.PNG.rrhk327/%EC%BA%A1%EC%B2%98.PNG?type=w800',
-			pla : 'https://file.namu.moe/file/c293bb9b0395e29954fd50d51f239cce456d5eeee14d6c8a8417ef1af1b06060',
-			dia : 'http://www.흑우팀.com/data/file/solorank/thumb-3552849856_0IHiB8kx_e95b44dde61c0b6dd59c2ebee062322cd173a590_400x229.png',
-			master : 'http://www.leagueoflegends.co.kr/upload/EditorImages/20181127151314_xSTAnyia.jpg'
-		}
-	}
+  data(){
+    return{
+      context:'http://localhost:8080',
+      id: store.state.person.id,
+      userid: store.state.person.userid,
+      passwd: store.state.person.passwd,
+      name: store.state.person.name,
+      birthday: store.state.person.birthday,
+      gender: store.state.person.gender,
+      hak:store.state.person.hak,
+      ban:store.state.person.ban,
+	score: store.state.person.score,
+	sidebars:[
+        {menu: "비밀번호 수정", link:"/mypageupdate"}
+      ]
+    }
+  },
+  methods:{
+    logout(){
+      alert('로그아웃')
+      alert(store.state.person.name)
+      store.state.person={}
+      alert(store.state.person.name)
+      this.$router.push({path: '/login'})
+
+    },
+    withdrawal(){
+      alert('회원탈퇴')
+      axios
+      .delete(`${this.context}/withdrawal/${store.state.person.userid}`)
+      .then(
+        alert('회탈 성공2')
+      )
+      .catch(()=>{
+        alert('악시오스 회탈 실패')
+      })
+      this.$router.push({path:'/'})
+    },
+    update(){
+      alert('비번 변경')
+      let url = `${this.context}/update/${store.state.person.userid}`
+      let data = {
+        userid: store.state.person.userid,
+        hak: store.state.person.hak,
+        ban: store.state.person.ban,
+        score: store.state.person.score
+      }
+      let headers = {
+          'authorization': 'JWT fefege..',
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json'
+      }
+      axios
+      .put(url, data, headers)
+      .then(res=>{
+        alert(res.data)
+      })
+      .catch(()=>{
+        alert('악시오스 실패3')
+      })
+    }
+  },
+  created(){
+	this.$router.push({path:'/studentlist'})
+  }
 }
 </script>
-<style scoped>
-.table-row{
-  width: 80%;
-  border: 1px solid black;
-  text-align: center;
-  margin:0 auto;
-  }
-#silver{
-	width:30px;
-}
-#gold{
-	width:30px;
-}
-#pla{
-	width:30px;
-}
-#dia{
-	width:30px;
-}
-#master{
-	width:30px;
-}
-.serial{
-	float:left;
-	color:#727272;
-}
-.percentage{
-	color: black;
-}
-.progress-table-wrap{
-	margin:0 auto;
-}
-.room{
-	color:green;
-}
-#btn1{
-	margin-right:5px;
-	}
-#btn2{
-	margin-left:-3px;
-	}
-#btns button{
-	border: 1px solid skyblue;
-	background-color: rgba(0,0,0,0);
-	color: skyblue; padding: 5px;
-	position: relative;
-	left:1300px;
-	margin-top:10px;
-	}
-.page{
-	border: 1px solid skyblue;
-	background-color: rgba(0,0,0,0);
-	color: skyblue; padding: 5px;
-	position: relative;
-	left:800px;
-	margin-top:20px;
-}
+
+ <style scoped>
+    .back {width: 700px; margin: 0 auto;}
+    .sub {width: 90%; height: 600px; margin: 0 auto; text-align: center;}
+    .pull-left {float: left;}
+    .pull-right {float: right;}
+	.pull-mid{float: mid; margin: 50px 0px 0px 160px;}
+    .top {margin-top: 1%;}
+    .rt {margin-right: 1%;}
+    .size {width: 49.5%; height: 100%;}
 </style>

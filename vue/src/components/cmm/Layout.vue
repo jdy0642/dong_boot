@@ -33,7 +33,7 @@ export default {
 <style scoped>
 #wrapper {
      padding: 5px;
-     width: 960px;
+     width: 1300px;
      margin: 20px auto;
 }
 header {
@@ -43,7 +43,7 @@ header {
 }
 #content {
      margin:50px 0px 0px 0px;
-     width: 696px;
+     width: 1000px;
      float: left;
      padding: 5px 15px;
     min-height: 300px;
@@ -57,6 +57,7 @@ header {
 footer {
      clear: both;
      padding: 0 15px;
+     width:1200px;
 }
 /* 가로폭 980보다 작을 때 사용할 @media query */
 @media screen and (max-width: 980px) {     

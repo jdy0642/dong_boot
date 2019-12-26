@@ -50,8 +50,13 @@ export default {
                 if(res.data.result === "SUCCESS"){
                     store.state.person = res.data.person
                     store.state.authCheck = true
-                    alert(`스토어에 저장성공 ${store.state.authCheck}`)
-                    this.$router.push({path:'/mypage'})
+                    if(store.state.person.role =="student"){
+                        store.state.sidebar = 'studentsidebar'
+                        this.$router.push({path:'/mypage'})
+                    }else{
+                        store.state.sidebar = 'adminsidebar'
+                        this.$router.push({path:'/admin'})
+                    }
                 }else{
                     alert(`로그인 실패 `)
                     this.$router.push({path:'/login'})
@@ -60,7 +65,6 @@ export default {
 			.catch(()=>{
                 alert('axios 실패')
 			})
-                    
 		}
 	}
 }

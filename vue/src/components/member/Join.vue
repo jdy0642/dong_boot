@@ -1,7 +1,9 @@
 <template>
+
 <div>
 <h3>Join</h3>
-<br/>
+<br />
+<form >
 <article class="card-body mx-auto" style="max-width: 400px;">
 	<form>
 	<div class="form-group input-group">
@@ -16,6 +18,28 @@
     <div class="form-group input-group">
         <input v-model="birthday" class="form-control" placeholder="birthday" type="text">
     </div> <!-- form-group// -->   
+    <div class="form-group input-group">
+        <input v-model="gender" class="form-control" placeholder="gender" type="text">
+    </div> <!-- form-group// -->   
+    <div class="form-group input-group">
+        <input v-model="hak" class="form-control" placeholder="hak" type="text">
+    </div> <!-- form-group// -->   
+    <div class="form-group input-group">
+        <input v-model="ban" class="form-control" placeholder="ban" type="text">
+    </div> <!-- form-group// -->   
+    <div class="form-group input-group">
+        <input v-model="score" class="form-control" placeholder="score" type="text">
+    </div> <!-- form-group// -->   
+
+    <div class="form-group input-group">
+        <select v-model="role" class="form-control" placeholder="role">
+                <option class="hidden" selected disabled>role</option>
+                <option >teacher</option>
+                <option >student</option>
+        </select>
+    </div>
+
+<br />
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block" @click.prevent="join"> Create Account  </button>
     </div> <!-- form-group// -->      
@@ -23,9 +47,11 @@
     <p class="text-center"><router-link to="/login">Have an account? Log In </router-link></p>                                                                 
 </form>
 </article>
+</form>
 </div>
 </template>
 <script>
+
 import axios from 'axios'
 export default {
     data () {
@@ -36,17 +62,28 @@ export default {
             passwd:'',
             name:'',
             birthday:'',
+            ban:'',
+            gender:'',
+            hak:'',
+            score:'',
+            role:'',
             person:{}
 		}
     },
     methods:{
         join(){
+            alert(this.role)
             let url = `${this.context}/join`
             let data = {
 				userid: this.userid,
                 passwd: this.passwd,
                 name: this.name,
-                birthday: this.birthday
+                birthday: this.birthday,
+                ban:this.ban,
+                gender: this.gender,
+                hak: this.hak,
+                score: this.score,
+                role:this.role
             }
             let headers = {
                 'authorization': 'JWT fefege..',
@@ -67,6 +104,10 @@ export default {
 </script>
 
 <style scoped>
+div{
+    text-align: -webkit-center;
+    
+}
 .divider-text {
     position: relative;
     text-align: center;

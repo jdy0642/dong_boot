@@ -5,7 +5,7 @@
      <h3> <a href="#" @click="logout">로그아웃  </a><a href="#" @click.prevent="withdrawal">회원탈퇴</a></h3>
      </div>
       <div class="sub">
-        <div  >
+        <div class="pull-left size">
                 <legend><h3>정보보기</h3></legend>
                 <h4>아이디: {{person.id}}</h4>
                 <h4>유저 아이디: {{person.userid}}</h4>
@@ -17,7 +17,11 @@
                 <h4>반: {{person.ban}}</h4>
                 <h4>점수: {{person.score}}</h4>
         </div>
-             <br/><br/><button @click.prevent="update">수정</button><br/><br/>
+        <div class="pull-right size" >
+             <legend><h3>비밀번호 변경</h3></legend>
+           <span><input v-model="person.passwd" type="text" name="newpwd" size="20" placeholder="변경할 비밀번호 입력" style="float: none;width: 70%;"></span>
+                <button style="float: right;" @click="update">수정</button><br/>
+        </div>
       </div>
     </div>
 </template>
@@ -29,16 +33,10 @@ export default {
   data(){
     return{
       context:'http://localhost:8080',
-      // id: store.state.person.id,
-      // userid: store.state.person.userid,
-      // passwd: store.state.person.passwd,
-      // name: store.state.person.name,
-      // birthday: store.state.person.birthday,
-      // gender: store.state.person.gender,
-      // hak:store.state.person.hak,
-      // ban:store.state.person.ban,
-      // score: store.state.person.score
-      person: store.state.person
+      person: store.state.person,
+      sidebars:[
+        {menu: "비밀번호 수정", link:"/mypageupdate"}
+      ]
     }
   },
   methods:{
@@ -48,7 +46,6 @@ export default {
       store.state.person={}
       alert(store.state.person.name)
       this.$router.push({path: '/login'})
-
     },
     withdrawal(){
       alert('회원탈퇴')

@@ -12,9 +12,9 @@
                 </div>
          <div class="pull-right size" >        
               <legend><h3>학생부 관리 </h3></legend>
-           <input v-model="hak" type="text"  placeholder="변경할 학년 입력" >
-           <input v-model="ban" type="text"  placeholder="변경할 반 입력" >
-          <input v-model="score" type="text"  placeholder="변경할 점수 입력" >
+                                학년:<input v-model="hak" type="text"  placeholder="변경할 학년 입력" > <br />
+                                반:<input v-model="ban" type="text"  placeholder="변경할 반 입력">  <br />
+                                점수:<input v-model="score" type="text"  placeholder="변경할 점수 입력" >
              <br/><br/><button @click.prevent="update">수정</button><br/><br/>
         </div>
       </div>
