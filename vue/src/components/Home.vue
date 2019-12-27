@@ -6,9 +6,9 @@
       <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
         </button>
-        <span class="glyphicon glyphicon-tint" aria-hidden="true"> 
-        <router-link to="/" class="navbar-brand"> Ship </router-link>
+        <span class="glyphicon glyphicon-tint" >
         </span>
+        <router-link to="/" class="navbar-brand" > Ship </router-link>
       </div>
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul class="nav navbar-nav navbar-right" >
@@ -88,6 +88,9 @@ export default {
     },
     sidebarCheck() {
       return store.state.sidebar
+    },
+    icon(){
+      return require('@/assets/cruise.png')
     }
   },
   methods:{
@@ -116,12 +119,13 @@ li {
     padding: 5px 5px 5px 5px;
     list-style: none;
 }
-
 @import 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans';
 .glyphicon{
   color: white;
-  width: 50px;
-  top: 10px;
+  top: 20px;
+  font-size: x-large;
+}
+.dropdown-toggle{
 }
 .dropdown-menu>li>a {
   color: #FFFFFF
@@ -131,11 +135,11 @@ li {
   color: #FFCC00
 }
 .dropdown-menu {
-  background-color: black
+  background-color: #101010
 }
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
-  background-color: black
+  background-color: #101010
 }
 header {
   height: 50px;
@@ -146,11 +150,13 @@ header {
 .navbar-brand {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
+  margin-top:6px;
+  font-size: 17px;
 }
 .navbar .nav {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
 }
 .navbar-inverse .navbar-brand {
   color: #FFFFFF

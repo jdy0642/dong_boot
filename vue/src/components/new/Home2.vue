@@ -32,8 +32,8 @@ export default {
 </script>
 <style scoped>
 .table{
-	
-	
 	padding: 2px;
+}
+div{
 }
 </style>

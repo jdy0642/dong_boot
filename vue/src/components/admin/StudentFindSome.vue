@@ -9,8 +9,28 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" @click.prevent="find">전 송</button>
         </div>
+        
+		<a @click.prevent="namesOfStudents">1. 학생의 이름</a> <br />
+		<a @click.prevent="streamToArray">2. 스트림을 배열로 전환</a><br />
+		<a @click.prevent="streamToMap">3. 스트림을 맵으로 전환. 학생이름이  key</a><br />
+		<a @click.prevent="theNumberOfStudents">4. 학생의 수</a><br/>
+		<a @click.prevent="totalScore">5. 학생들 총점</a><br />
+		<a @click.prevent="topStudent">6. 1등 학생</a><br />
+		<a @click.prevent="getStat">7. 전체 학생 성적 통계</a><br />
+		<a @click.prevent="nameList">8. 전체 학생 이름</a><br />
+		<a @click.prevent="partioningBy">1.단순분할 (성별로 분할)</a><br />
+		<a @click.prevent="partioningCountPerGender">2.단순분할 (성별 학생수)</a><br />
+		<a @click.prevent="partioningTopPerGender">3.단순분할 (성별 1등)</a><br />
+		<a @click.prevent="partioningRejectPerGender">4.다중분할 (성별 불합격자,  50점이하)</a><br />
+		<a @click.prevent="groupingByBan">1. 단순 그룹화(반별로 그룹화)</a><br />
+		<a @click.prevent="groupingByGrade">2. 단순그룹화(성적별로 그룹화)</a><br />
+		<a @click.prevent="groupingByCountByLevel">3. 단순그룹화 + 통계(성적별 학생수))</a><br />
+		<a @click.prevent="groupingByHakAndBan">4. 다중 그룹화 (학년별, 반별)</a><br />
+		<a @click.prevent="groupingTopByHakAndBan">5. 다중 그룹화 +통계 (학년별, 반별  1등)</a><br />
+		<a @click.prevent="groupingByStat">6. 다중그룹화 + 통계(학년별, 반별  성적그룹)</a>
     </form>
   </div>
+
   <!-- <div>
   <h1> 학생 목록
   <br />
@@ -55,11 +75,10 @@ export default {
 		}
 	},
 	methods:{
-		find(){
-      alert(this.searchWord)
+		namesOfStudents(){
 			let url = `${this.context}/students/${this.searchWord}`
 			let data = {
-				searchWord: this.searchWord
+				searchWord: 'namesOfStudents'
 			}
 			let headers = {
                 'authorization': 'JWT fefege..',
@@ -74,7 +93,7 @@ export default {
 			.catch(()=>{
         alert('axios 실패')
 			})
-		}
+    },
 	}
 }
 </script>

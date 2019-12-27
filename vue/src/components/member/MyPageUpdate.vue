@@ -2,7 +2,9 @@
 
   <div class="back">
      <div align = "center" ><h2> {{name}} 님의 My Page Update</h2>
-     <h3> <a href="#" @click="logout">로그아웃  </a><a href="#" @click.prevent="withdrawal">회원탈퇴</a></h3>
+     <h3> <a href="#" @click="logout">로그아웃  </a>
+     <button type="button" class="btn btn-lg btn-danger"  @click.prevent="withdrawal">회원탈퇴</button>
+     </h3>
      </div>
       <div class="sub">
         <div class="pull-left size" >

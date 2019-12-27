@@ -1,53 +1,70 @@
 <template>
 
 <div>
-<h3>Join</h3>
-<br />
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">회원가입</button>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     
+ <h3>회원가입</h3>
 <form >
 <article class="card-body mx-auto" style="max-width: 400px;">
 	<form>
-	<div class="form-group input-group">
-        <input v-model="userid" class="form-control" placeholder="userid" type="text">
+	<div class="col">
+        <input v-model="userid" class="form-control" placeholder="아이디" type="text">
     </div> <!-- form-group// -->
-    <div class="form-group input-group">
-        <input v-model="passwd" class="form-control" placeholder="password" type="text">
+    <br />
+    <div class="col">
+        <input v-model="passwd" class="form-control" placeholder="비밀번호" type="text">
     </div> <!-- form-group// -->
-    <div class="form-group input-group">
-        <input v-model="name" class="form-control" placeholder="name" type="text">
+    <br />
+    <div class="col">
+        <input v-model="name" class="form-control" placeholder="이름" type="text">
     </div> <!-- form-group// -->
-    <div class="form-group input-group">
-        <input v-model="birthday" class="form-control" placeholder="birthday" type="text">
+    <br />
+    <div class="col">
+        <input v-model="birthday" class="form-control" placeholder="생일" type="text">
     </div> <!-- form-group// -->   
-    <div class="form-group input-group">
-        <input v-model="gender" class="form-control" placeholder="gender" type="text">
+    <br />
+    <div class="col">
+        <input v-model="gender" class="form-control" placeholder="성" type="text">
+    </div> <!-- form-group// -->  
+    <br /> 
+    <div class="col">
+        <input v-model="hak" class="form-control" placeholder="학년" type="text">
+    </div> <!-- form-group// -->  
+    <br /> 
+    <div class="col">
+        <input v-model="ban" class="form-control" placeholder="반" type="text">
     </div> <!-- form-group// -->   
-    <div class="form-group input-group">
-        <input v-model="hak" class="form-control" placeholder="hak" type="text">
-    </div> <!-- form-group// -->   
-    <div class="form-group input-group">
-        <input v-model="ban" class="form-control" placeholder="ban" type="text">
-    </div> <!-- form-group// -->   
-    <div class="form-group input-group">
-        <input v-model="score" class="form-control" placeholder="score" type="text">
-    </div> <!-- form-group// -->   
+    <br />
+    <div class="col">
+        <input v-model="score" class="form-control" placeholder="점수" type="text">
+    </div> <!-- form-group// --> 
+    <br />  
 
-    <div class="form-group input-group">
-        <select v-model="role" class="form-control" placeholder="role">
-                <option class="hidden" selected disabled>role</option>
-                <option >teacher</option>
-                <option >student</option>
+    <div class="col" >
+        <select v-model="role" class="form-control" placeholder="role" aria-expanded="true">
+                <option ><li>선생님</li></option>
+                <option >학생</option>
         </select>
     </div>
 
-<br />
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block" @click.prevent="join"> Create Account  </button>
+    <br />
+    <div class="col">
+        <button type="submit" class="btn btn-primary btn-block" @click.prevent="join"> 계정 만들기  </button>
     </div> <!-- form-group// -->      
+    <br />
 
-    <p class="text-center"><router-link to="/login">Have an account? Log In </router-link></p>                                                                 
+    <p class="text-center"><router-link to="/login">이미 계정이 있다면? 로그인  </router-link></p>                                                                 
 </form>
 </article>
 </form>
+     
+    </div>
+  </div>
+</div>
 </div>
 </template>
 <script>
@@ -104,8 +121,13 @@ export default {
 </script>
 
 <style scoped>
+@import 'https://fonts.googleapis.com/css?family=Montserrat|Open+Sans';
+.col{
+    width:300px;
+}
 div{
     text-align: -webkit-center;
+    
     
 }
 .divider-text {
