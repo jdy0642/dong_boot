@@ -14,8 +14,8 @@ export default{
 			sidebars : [
         {menu:"학생성적수정",link:"/mypageupdate"},
 				{menu:"학생목록",link:"/studentlist"},
-				{menu:"남학생목록",link:"/malelist"},
-				{menu:"여학생목록",link:"/femalelist"},
+				{menu:"조건별 학생 검색",link:"/studentfindsome"},
+				{menu:"ID 학생 검색",link:"/studentfindid"},
 				{menu:"학생만검색",link:"/studentsearch"}
 			]
 		}

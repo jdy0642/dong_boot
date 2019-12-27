@@ -1,6 +1,6 @@
 <template>
-<div @click="msg" style="height : 300px; text-align:center; margin-top:20px">
-경기장 예약하기
+<div @click="msg">
+header
 </div>
 </template>
 <script>

@@ -6,12 +6,17 @@
 </template>
 <script>
 export default({
+	created(){
+		this.$emit("send",this.stadium)
+	},
 	data(){
-		return {stadium : ''}
+		return {
+			stadium : ''
+		}
 	},
 	methods:{
 		submit(){
-			alert(this.stadium)
+			this.$emit("send",this.stadium)
 		}
 	}
 })

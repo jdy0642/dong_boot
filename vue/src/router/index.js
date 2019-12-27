@@ -19,6 +19,8 @@ import Write from '@/components/board/Write.vue'
 import Futsal from '@/components/contents/Futsal.vue'
 import Lol from '@/components/contents/Lol.vue'
 import Home2 from '@/components/new/Home2.vue'
+import StudentFindSome from '@/components/admin/StudentFindSome.vue'
+import StudentFindId from '@/components/admin/StudentFindId.vue'
 
 Vue.use(Router)
 
@@ -35,6 +37,8 @@ export default new Router({
 		{path:'/mypage', name:'mypage', component: MyPage},
 		{path:'/futsalmypage', name:'futsalmypage', component: FutsalMypage},
 		{path:'/mypageupdate', name:'mypageupdate', component: MyPageUpdate},
+		{path:'/studentfindsome', name:'studentfindsome', component: StudentFindSome},
+		{path:'/studentfindid', name:'studentfindid', component: StudentFindId},
 		{path:'/login', name:'login', component: Login},
 		{path:'/list', name:'list', component: List},
 		{path:'/search', name:'search', component: Search},
