@@ -1,13 +1,13 @@
 <template>
 
 <div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">회원가입</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
 
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
      
- <h3>회원가입</h3>
+<h3>회원가입</h3>
 <form >
 <article class="card-body mx-auto" style="max-width: 400px;">
 	<form>

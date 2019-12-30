@@ -28,6 +28,7 @@
 		<a @click.prevent="groupingByHakAndBan">4. 다중 그룹화 (학년별, 반별)</a><br />
 		<a @click.prevent="groupingTopByHakAndBan">5. 다중 그룹화 +통계 (학년별, 반별  1등)</a><br />
 		<a @click.prevent="groupingByStat">6. 다중그룹화 + 통계(학년별, 반별  성적그룹)</a>
+		<a @click.prevent="groupingByHak">6. 학년별 그륩화</a>
     </form>
   </div>
 
@@ -76,17 +77,9 @@ export default {
 	},
 	methods:{
 		namesOfStudents(){
-			let url = `${this.context}/students/${this.searchWord}`
-			let data = {
-				searchWord: 'namesOfStudents'
-			}
-			let headers = {
-                'authorization': 'JWT fefege..',
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
-            }
+            alert('검색어: '+this.searchWord)
 			axios
-			.get(url, data, headers)
+			.get( `${this.context}/students/${this.searchWord}`)
 			.then(res=>{
         alert(res.data)
 			})
@@ -94,6 +87,17 @@ export default {
         alert('axios 실패')
 			})
     },
+        groupingByHak(){
+            alert('검색어: '+this.searchWord)
+			axios
+			.get( `${this.context}/students/${this.searchWord}`)
+			.then(res=>{
+        alert(res.data)
+			})
+			.catch(()=>{
+        alert('axios 실패')
+			})    
+        }
 	}
 }
 </script>

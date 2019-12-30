@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dong.web.util.Printer;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8082")
+@CrossOrigin(origins = "http://localhost:8081")
 
 public class PersonController {
 	@Autowired 	private PersonRepository personRepository;
 	@Autowired	private Printer p;
+	@Autowired PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Bean public ModelMapper modelMapper() {return new ModelMapper();}
 	
@@ -99,5 +100,66 @@ public class PersonController {
 		return list.stream()
 				.filter(role-> role
 					.getRole().equals("student"));
+	}
+	@GetMapping("/students/{searchWord}")
+	public Stream<PersonDTO> findSome(@PathVariable String searchWord) {
+		p.accept("검색어: "+searchWord);
+		String switchKey = "";
+		switch(searchWord) {
+		case "학생이름": case "이름": 
+			switchKey = (searchWord == "이름") ? "namesOfStudents" : "streamToArray"; 
+			break;
+		case "streamToArray" : personService.streamToArray(); break;
+		case "streamToMap" :  break;
+		case "theNumberOfStudents" : break;
+		case "totalScore" : break;
+		case "topStudent" : break;
+		case "getStat" : break;
+		case "nameList" : break;
+		case "partioningByGender" : break;
+		case "partioningCountPerGender" : break;
+		case "partioningTopPerGender" : break;
+		case "partioningRejectPerGender" : break;
+		case "findByHak" : break;
+		case "groupByGrade" : break;
+		case "groupByHak" : 
+			switchKey = "groupByHak"; 
+			break;
+		case "personCountByLevel" : break;
+		case "multiGrouping" : break;
+		case "multiGroupingMax" : break;
+		case "multiGroupingGrade" : break;
+		}
+		switch(switchKey) {
+		case "namesOfStudents":
+			List<Person> list = personService.partioningByGender(true);
+			break;
+		case "streamToArray" : personService.streamToArray(); break;
+		case "streamToMap" :  break;
+		case "theNumberOfStudents" : break;
+		case "totalScore" : break;
+		case "topStudent" : break;
+		case "getStat" : break;
+		case "nameList" : break;
+		case "partioningByGender" : break;
+		case "partioningCountPerGender" : break;
+		case "partioningTopPerGender" : break;
+		case "partioningRejectPerGender" : break;
+		case "findByHak" : break;
+		case "groupByGrade" : break;
+		case "personCountByLevel" : break;
+		case "multiGrouping" : break;
+		case "multiGroupingMax" : break;
+		case "multiGroupingGrade" : break;
+		case "groupByHak" : break;
+		}
+		Iterable<Person> entities = personRepository.findGroupByHak();
+		List<PersonDTO> list = new ArrayList<>();
+		for(Person p : entities) {
+			PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+			list.add(dto);
+		}
+		return list.stream()
+				.filter(role-> role.getRole().equals("student"));
 	}
 }
