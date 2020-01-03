@@ -66,38 +66,15 @@
 </div> -->
 </template>
 <script>
-import axios from 'axios'
 export default {
 	data () {
 		return {
-      context:'http://localhost:8080',
       list:[],
       searchWord:''
 		}
 	},
 	methods:{
-		namesOfStudents(){
-            alert('검색어: '+this.searchWord)
-			axios
-			.get( `${this.context}/students/${this.searchWord}`)
-			.then(res=>{
-        alert(res.data)
-			})
-			.catch(()=>{
-        alert('axios 실패')
-			})
-    },
-        groupingByHak(){
-            alert('검색어: '+this.searchWord)
-			axios
-			.get( `${this.context}/students/${this.searchWord}`)
-			.then(res=>{
-        alert(res.data)
-			})
-			.catch(()=>{
-        alert('axios 실패')
-			})    
-        }
+
 	}
 }
 </script>

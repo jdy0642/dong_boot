@@ -8,10 +8,11 @@
 	</div>
 </template>
 <script>
-export default{
+export default {
+	name:'preSidebar',
 	data(){
 		return {
-			sidebars : [
+			sidebars: [
 				{menu:"게시글 목록",link:"/list"},
 				{menu:"게시글 검색",link:"/search"}
 			]

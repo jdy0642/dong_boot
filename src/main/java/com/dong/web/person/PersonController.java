@@ -1,7 +1,9 @@
 package com.dong.web.person;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
@@ -23,8 +25,8 @@ import com.dong.web.util.Printer;
 @CrossOrigin(origins = "http://localhost:8081")
 
 public class PersonController {
-	@Autowired 	private PersonRepository personRepository;
-	@Autowired	private Printer p;
+	@Autowired private PersonRepository personRepository;
+	@Autowired private Printer p;
 	@Autowired PersonService personService;
 	@Autowired ModelMapper modelMapper;
 	@Bean public ModelMapper modelMapper() {return new ModelMapper();}
@@ -88,21 +90,23 @@ public class PersonController {
 		person = personRepository.save(person);
 	}
 	@GetMapping("/students")
-	public Stream<PersonDTO> list() {
+	public List<Person> list() {
 		p.accept("가져오기 진입");
 //		Iterable<Person> entities=personRepository.findByRole("student");
 		Iterable<Person> entities = personRepository.findAll();
-		List<PersonDTO> list = new ArrayList<>();
+		List<Person> list = new ArrayList<>();
 		for(Person p : entities) {
-			PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+			Person dto = modelMapper.map(p, Person.class);
 				list.add(dto);
 		}
-		return list.stream()
-				.filter(role-> role
-					.getRole().equals("student"));
+		return  list.stream()
+					.filter(role-> role.getRole().equals("student"))
+						.sorted(Comparator.comparing(Person::getPersonid)
+							.reversed()).collect(Collectors.toList());
+		
 	}
 	@GetMapping("/students/{searchWord}")
-	public Stream<PersonDTO> findSome(@PathVariable String searchWord) {
+	public Stream<Person> findSome(@PathVariable String searchWord) {
 		p.accept("검색어: "+searchWord);
 		String switchKey = "";
 		switch(searchWord) {
@@ -154,9 +158,9 @@ public class PersonController {
 		case "groupByHak" : break;
 		}
 		Iterable<Person> entities = personRepository.findGroupByHak();
-		List<PersonDTO> list = new ArrayList<>();
+		List<Person> list = new ArrayList<>();
 		for(Person p : entities) {
-			PersonDTO dto = modelMapper.map(p, PersonDTO.class);
+			Person dto = modelMapper.map(p, Person.class);
 			list.add(dto);
 		}
 		return list.stream()

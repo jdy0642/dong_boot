@@ -4,7 +4,7 @@
 		<slot name="header" :title="header"></slot>
 	</header>
 	<aside id="sidebar">
-		<slot name="sidebar" :title="sidebar"></slot>
+		<slot name="sidebar" :title="changeSidebars"></slot>
 	</aside>
 	<section id="content">
 		<slot name="content" :title="content"></slot>
@@ -20,14 +20,17 @@ export default {
   data(){
     return{
 		header:[
-               {menu: "로그인", link:"/login"},
-               {menu: "회원가입", link:"/join"}
                ],
 		sidebar:'sidebar 입니다 ',
 		content:'Content',
 		footer:'Footer'
     }
-  }
+  },
+       computed: {
+          changeSidebars: function(){
+               return this.$store.state.common.changeSidebars
+          }
+     }
 }
 </script>
 <style scoped>

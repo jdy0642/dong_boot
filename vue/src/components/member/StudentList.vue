@@ -1,75 +1,80 @@
 <template>
 <div>
-  <h1> 학생 목록
-  <br />
-  <br />
-  <table class="table">
-    <tr>
-      <th>No.</th> 
-      <th>아이디</th>
-      <th>비밀번호</th>
-      <th>이름</th>
-      <th>생년월일</th>
-      <th>학년</th>
-      <th>반</th>
-      <th>점수 </th>
-      <th>남녀 </th>
-      <th>역할 </th>
-    </tr>
-    <tr v-for="(j, i) of list" :key="j.id">
-      <td>{{i+1}}</td> 
-      <td>{{j.userid}}</td>
-      <td>{{j.passwd}}</td>
-      <td>{{j.name}}</td>
-      <td>{{j.birthday}}</td>
-      <td>{{j.hak}}</td>
-      <td>{{j.ban}}</td>
-      <td>{{j.score}}</td>
-      <td>{{j.gender}}</td>
-      <td>{{j.role}}</td>
-    </tr>
-  </table>
-  </h1>
+  <pagination :list-array="pageArray"/>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Pagination from '@/components/cmm/Pagination.vue'
 export default {
-  data(){
-    return{
-      context:'http://localhost:8080',
-      list:[]
-    }
+	data(){
+		return {
+			ctx: this.$store.state.common.context,
+      pageArray: []
+		}
   },
-  created(){
-    axios
-    .get(`${this.context}/students`)
-    .then(res=>{
-        this.list = res.data
-    })
-    .catch(()=>{
-      alert('ax 실패')
-    })
-  }
-
+  components:{
+		Pagination
+	},
+	created(){
+		axios
+		.get(`${this.ctx}/students`)
+		.then(res =>{
+      // let arr = []
+      // for(let i = 1; i< res.data.length/5; i++){
+      //   arr.push(i)
+      // }
+      // this.pages = arr
+      // this.list = res.data.slice(0,5)
+      this.pageArray = res.data
+		})
+		.catch(e=>{
+			alert('AXIOS FAIL'+e)
+		})
+	}
 }
 </script>
 
 <style scoped>
-.table{
-  border : 1px solid black;
-  font-size: 20px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th {
+  font-size: 1.2rem;
+}
+.table tr {
+  height: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #505050;
+}
+.table tr:first-of-type {
+  border-top: 2px solid #404040;
+}
+.table tr th {
+  padding: 1rem 0;
+  border:1px solid black;
+  text-align:center;
+}
+.table tr td {
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  border:1px solid black;
+}
+.btn-cover {
+  margin-top: 1.5rem;
   text-align: center;
 }
-.table tr{
-  border : 1px solid black;
+.btn-cover .page-btn {
+  width: 5rem;
+  height: 2rem;
+  letter-spacing: 0.5px;
 }
-.table tr th{
-  border : 1px solid black;
-  text-align: center;
-}
-.table tr td{
-  border : 1px solid black;
+.btn-cover .page-count {
+  padding: 0 1rem;
+  border: 1px solid black;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 </style>

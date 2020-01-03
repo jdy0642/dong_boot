@@ -6,26 +6,26 @@
       <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
         </button>
-        <span class="glyphicon glyphicon-tint" >
+        <span class="glyphicon glyphicon-globe" >
         </span>
         <router-link to="/" class="navbar-brand" > Ship </router-link>
       </div>
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <ul class="nav navbar-nav navbar-right" >
-          <li v-if="logined">
+        <ul class="nav navbar-nav navbar-right"  >
+          <li v-if="loginCheck">
             <router-link to="/join">join</router-link>
           </li>
           <li v-else>
             <a href="#" @click.prevent="withdrawal">회원탈퇴</a>
           </li>
-          <li v-if="logined">
+          <li v-if="loginCheck">
             <router-link to="/login">login</router-link>
           </li>
           <li v-else>
             <a href="#" @click="logout">로그아웃  </a>
           </li>
           <li>
-            <router-link to="/list">admin</router-link>
+            <router-link to="/list">admin<span class="badge">5</span></router-link>
           </li>
           <li>
             <router-link to="/futsalmypage">my page</router-link>
@@ -42,15 +42,21 @@
     </div>
 	</template>
 
-	<template #sidebar="s">
-      <div v-switch="sidebarCheck">
+	<template #sidebar="sidebar">
+      <!-- <div v-switch="sidebarCheck">
         <h4 v-case="'presidebar'">
           <component :is="'pre-sidebar'"></component></h4>
         <h4 v-case="'adminsidebar'">
           <component :is="'admin-sidebar'"></component> </h4>
         <h4 v-case="'studentsidebar'">
           <component :is="'student-sidebar'"></component> </h4>
-      </div>
+      </div> -->
+      <!-- <component :is="sidebarCheck"></component> -->
+      <ul class="menu" >
+				<li v-for="sidebar of sidebarCheck" :key="sidebar.menu">
+					<router-link :to='sidebar.link'>{{sidebar.menu}}</router-link>
+				</li>
+			</ul>	
   </template>
 
 	<template #content ="c" class="c">
@@ -66,50 +72,37 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Layout from '@/components/cmm/Layout.vue'
-import StudentSidebar from '@/components/cmm/StudentSidebar.vue'
-import PreSidebar from '@/components/cmm/PreSidebar.vue'
-import AdminSidebar from '@/components/cmm/AdminSidebar.vue'
-import {store} from '@/store'
-
 export default {
   components:{
-    Layout, StudentSidebar, PreSidebar, AdminSidebar
+    Layout
   },
   data(){
     return{
-      context:'http://localhost:8080'
 		}
-  },
-  computed:{
-    logined(){
-      return store.state.person.name == undefined
-    },
-    sidebarCheck() {
-      return store.state.sidebar
-    },
-    icon(){
-      return require('@/assets/cruise.png')
-    }
   },
   methods:{
     logout(){
-      store.state.person={},
-      store.state.sidebar='presidebar'
-      this.$router.push({path: '/login'})
-    },
-     withdrawal(){
-      axios
-      .delete(`${this.context}/withdrawal/${store.state.person.userid}`)
-      .then(
-        alert('회탈 성공2')
-      )
-      .catch(()=>{
-        alert('악시오스 회탈 실패')
-      })
-      this.$router.push({path:'/'})
+      this.$store.state.admin={}
+      this.$store.state.admin.isAuth=''
+      this.$router.push({path : '/'})
     }
+  },
+  computed:{
+    loginCheck() {
+      if(this.$store.state.admin.isAuth==''){
+        return true
+      }else{
+        return false
+        }
+      },
+		sidebarCheck(){
+      if(this.$store.state.admin.isAuth==''){
+        return this.$store.state.common.sidebars
+      }else{
+        return this.$store.state.admin.sidebars
+      }
+    },
   }
 }
 </script>

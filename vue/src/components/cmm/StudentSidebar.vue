@@ -8,18 +8,10 @@
 	</div>
 </template>
 <script>
-export default{
-	data(){
+export default {
+	data () {
 		return {
-			sidebars : [
-				{menu:"내정보보기",link:"/mypage"},
-				{menu:"비밀번호변경",link:"/change"},
-				{menu:"글쓰기",link:"/write"},
-				{menu:"목록",link:"/list"},
-				{menu:"글수정",link:"/update"},
-				{menu:"글삭제",link:"/remove"},
-				{menu:"검색",link:"/search"}
-			]
+			sidebars: this.$store.state.sidebars
 		}
 	}
 }

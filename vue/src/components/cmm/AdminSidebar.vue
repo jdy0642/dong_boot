@@ -8,16 +8,10 @@
 	</div>
 </template>
 <script>
-export default{
-	data(){
+export default {
+	name:'adminSidebar',
+	data () {
 		return {
-			sidebars : [
-        {menu:"학생성적수정",link:"/mypageupdate"},
-				{menu:"학생목록",link:"/studentlist"},
-				{menu:"조건별 학생 검색",link:"/studentfindsome"},
-				{menu:"ID 학생 검색",link:"/studentfindid"},
-				{menu:"학생만검색",link:"/studentsearch"}
-			]
 		}
 	}
 }

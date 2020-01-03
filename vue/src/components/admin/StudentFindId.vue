@@ -44,48 +44,11 @@
 </div> -->
 </template>
 <script>
-import axios from 'axios'
-import {store} from '../../store'
 export default {
 	data () {
 		return {
       context:'http://localhost:8080',
       list:[]
-		}
-	},
-	methods:{
-		find(){
-			let url = `${this.context}/login`
-			let data = {
-				userid: this.userid,
-				passwd: this.passwd
-			}
-			let headers = {
-                'authorization': 'JWT fefege..',
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
-            }
-			axios
-			.post(url, data, headers)
-			.then(res=>{
-                if(res.data.result === "SUCCESS"){
-                    store.state.person = res.data.person
-                    store.state.authCheck = true
-                    if(store.state.person.role =="student"){
-                        store.state.sidebar = 'studentsidebar'
-                        this.$router.push({path:'/mypage'})
-                    }else{
-                        store.state.sidebar = 'adminsidebar'
-                        this.$router.push({path:'/admin'})
-                    }
-                }else{
-                    alert(`로그인 실패 `)
-                    this.$router.push({path:'/login'})
-                }
-			})
-			.catch(()=>{
-                alert('axios 실패')
-			})
 		}
 	}
 }

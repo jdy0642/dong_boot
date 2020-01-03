@@ -20,21 +20,17 @@
 import axios from 'axios'
 import {store} from '../../store'
 export default {
+  name: 'admin',
   data(){
     return{
       context:'http://localhost:8080',
-      id: store.state.person.id,
-      userid: store.state.person.userid,
-      passwd: store.state.person.passwd,
-      name: store.state.person.name,
-      birthday: store.state.person.birthday,
-      gender: store.state.person.gender,
-      hak:store.state.person.hak,
-      ban:store.state.person.ban,
-	score: store.state.person.score,
+      name: store.state.name,
+      person : store.state.person,
+      hak:'',
 	sidebars:[
         {menu: "비밀번호 수정", link:"/mypageupdate"}
-      ]
+      ],
+      authCheck : true
     }
   },
   methods:{

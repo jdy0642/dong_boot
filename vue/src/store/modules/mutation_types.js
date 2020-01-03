@@ -1,0 +1,6 @@
+export const PERSON = 'PERSON'
+export const ERROR_STATE = 'ERROR_STATE'
+export const IS_AUTH = 'IS_AUTH'
+export const SIDEBARS = 'SIDEBARS'
+export const CONTEXT = 'CONTEXT'
+export const SOME_MUTATION = 'SOME_MUTATION'
